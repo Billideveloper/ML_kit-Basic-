@@ -13,8 +13,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     
     let picker = UIImagePickerController()
     
-    let MyLibrary = Resnet50()
+    var myModel: Resnet50 = try! Resnet50(configuration: MLModelConfiguration.init())
     
+    let mymodel2 : MobileNetV2 = try! MobileNetV2(configuration: MLModelConfiguration.init())
+    
+    @IBOutlet weak var label2: UILabel!
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -24,6 +27,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         super.viewDidLoad()
         picker.delegate = self
     
+      
         // Do any additional setup after loading the view.
     }
 
@@ -35,9 +39,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         
     }
     
-    
-    
-    
+ 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         let selectedimage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage)
@@ -56,11 +58,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     //MARK: - detect Image Here
     
     func detectImage(image: UIImage){
-        
-        
-        if let mymodel = try? VNCoreMLModel(for: MyLibrary.model){
-            
-            
+        if let mymodel = try? VNCoreMLModel(for: myModel.model){
             let myrequest = VNCoreMLRequest(model: mymodel) { [self] (request, error) in
                 
                 if let results = request.results as? [VNClassificationObservation]{
@@ -80,46 +78,63 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
                 }
                 
             }
-            
             let mimage = imageView.image!
             let cgimage = CIImage(image: mimage)
             let handler = VNImageRequestHandler(ciImage: cgimage!)
             try? handler.perform([myrequest])
-            
-        }
-    
-//        //to get VNCoreML model import Vision
-//        do{
-//        let model = try VNCoreMLModel(for: MyLibrary.model)
-//        let request = VNCoreMLRequest(model: model, completionHandler: handleResults)
-//            let mimage = imageView.image!
-//            let cgimage = CIImage(image: mimage)
-//            let handler = VNImageRequestHandler(ciImage: cgimage!)
-//            try handler.perform([request])
-//
-//        }catch{
-//            print("error")
-//        }
+            }
+
     }
     
+    func detectImage2(image: UIImage){
+        
+        //define model
+        
+        if let mymodel2 = try? VNCoreMLModel(for: mymodel2.model){
+            
+            //request from model
+            
+            let request = VNCoreMLRequest(model: mymodel2) { (request, error) in
+                
+               //get results now
+                
+                if let results = request.results as? [VNClassificationObservation]{
+                    
+                    if let identity = results.first?.identifier, let percent = results.first?.confidence{
+                        
+                        self.label2.text = "\(String(describing: identity)) & \(String(describing: percent))"
+                    }
+                    
+                }
+                
+                
+                
+            }
+            
+            //define image
+            let mimage = imageView.image!
+            //define cgimage
+            let cgimage = CIImage(image: mimage)
+            //request handler data
+            let handler = VNImageRequestHandler(ciImage: cgimage!)
+            //fetch request results
+            try? handler.perform([request])
+            
+            
+            
+            
+        }
+        
+    }
     
-    
-//    func handleResults(request: VNRequest, error: Error?) {
-//
-//        guard let results = request.results as? [VNCoreMLFeatureValueObservation]
-//          else {
-//            print(error?.localizedDescription as Any)
-//            return
-//        }
-//
-//        print(results)
-//    }
 
     @IBAction func fetch(_ sender: Any) {
         
         let mimage = imageView.image!
         
-        detectImage(image: mimage)
+        detectImage2(image: mimage)
+        
+        //detectImage(image: mimage)
     }
     
     

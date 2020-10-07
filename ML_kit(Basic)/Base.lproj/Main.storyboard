@@ -20,7 +20,7 @@
                                 <rect key="frame" x="20" y="108" width="374" height="714"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Itt-DD-el1">
-                                        <rect key="frame" x="0.0" y="-1" width="374" height="495"/>
+                                        <rect key="frame" x="0.0" y="-1" width="374" height="445"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
                                                 <integer key="value" value="15"/>
@@ -28,11 +28,20 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtB-ly-ckG">
-                                        <rect key="frame" x="0.0" y="504" width="374" height="100"/>
+                                        <rect key="frame" x="0.0" y="454" width="374" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="Cyv-LZ-11h"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5le-au-WLG">
+                                        <rect key="frame" x="0.0" y="564" width="374" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="bmq-Me-R0x"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -88,6 +97,7 @@
                     <connections>
                         <outlet property="imageView" destination="Itt-DD-el1" id="Xg7-Y5-aUX"/>
                         <outlet property="imagedetect" destination="rtB-ly-ckG" id="3hS-o1-VCt"/>
+                        <outlet property="label2" destination="5le-au-WLG" id="74z-nu-cPz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
